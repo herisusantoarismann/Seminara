@@ -1,0 +1,46 @@
+body {
+  overflow-y: hidden;
+  font-weight: 700;
+  .login-wrapper {
+    position: relative;
+    margin: 150px auto;
+    width: 400px;
+    .login-logo {
+      img {
+        margin: auto;
+        width: 100px;
+      }
+    }
+    .login-title {
+      margin: 20px;
+      text-align: center;
+    }
+    .ui.card {
+      width: 100%;
+      .login-input {
+        margin: 20px;
+        .inline.fields {
+          display: flex;
+          justify-content: space-between;
+          .login-forgot:hover {
+            text-decoration: underline;
+          }
+        }
+        .login-submit {
+          margin-top: 30px;
+          button {
+            margin: auto;
+            width: 100%;
+          }
+        }
+      }
+    }
+    .login-create {
+      padding: 20px;
+      text-align: center;
+      a:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}

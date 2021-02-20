@@ -1,0 +1,60 @@
+.register-bg {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background: cornflowerblue;
+  clip-path: polygon(0 100%, 0 0, 100% 0, 0% 100%);
+  z-index: 5;
+}
+.register-wrapper {
+  @media screen and (max-width: 411px) {
+    height: calc(100vh - 300px);
+  }
+  @media screen and (max-width: 360px) {
+    height: calc(100vh - 200px) !important;
+  }
+  @media screen and (max-width: 320px) {
+    height: calc(100vh - 100px);
+  }
+  @media screen and (max-width: 375px) {
+    height: calc(100vh - 200px);
+  }
+  @media screen and (max-width: 414px) {
+    height: calc(100vh - 300px);
+  }
+  @media screen and (max-width: 768px) {
+    height: calc(100vh - 600px);
+  }
+  @media screen and (max-width: 1024px) {
+    height: calc(100vh - 950px);
+  }
+  @media screen and (max-width: 540px) {
+    height: calc(100vh - 300px);
+  }
+  position: absolute;
+  top: 40%;
+  transform: translateY(-40%);
+  left: 0;
+  right: 0;
+  height: calc(100vh - 30%);
+  width: calc(100% - 50%);
+  margin: auto;
+  z-index: 10;
+  -webkit-box-shadow: 0px 0px 27px 1px rgba(209, 209, 209, 1);
+  -moz-box-shadow: 0px 0px 27px 1px rgba(209, 209, 209, 1);
+  box-shadow: 0px 0px 27px 1px rgba(209, 209, 209, 1);
+  background: #ffff;
+  .register-title {
+    padding: 20px;
+    background: #e3e3e3;
+  }
+  .register-form {
+    padding: 20px;
+    a {
+      button {
+        margin-top: 20px;
+        margin-left: 41%;
+      }
+    }
+  }
+}

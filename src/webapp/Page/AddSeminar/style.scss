@@ -1,0 +1,35 @@
+.wrapper {
+  .content-seminar {
+    .content-title {
+      a {
+        cursor: pointer;
+      }
+    }
+    .add-input-wrapper {
+      padding: 50px 70px;
+      width: 100%;
+      .ui.form {
+        width: 100%;
+        .inline.field {
+          display: flex;
+          .add-input-title {
+            width: 10em;
+          }
+          .add-input-place {
+            width: calc(100% - 10em);
+            .ui.input {
+              width: 100%;
+            }
+          }
+        }
+        .add-seminar-submit {
+          width: 100%;
+          button {
+            width: 7em;
+            margin-left: 45%;
+          }
+        }
+      }
+    }
+  }
+}

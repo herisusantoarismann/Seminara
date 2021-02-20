@@ -1,0 +1,20 @@
+name: test
+
+on: [pull_request]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Branch
+      uses: actions/checkout@v2
+
+    - name: Use Node.js 13.x
+      uses: actions/setup-node@v1
+      with:
+        node-version: 13.x
+
+    - name: Build and Run Tests
+      run: yarn install --frozen-lockfile && yarn test

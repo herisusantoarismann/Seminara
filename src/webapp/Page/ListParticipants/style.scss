@@ -1,0 +1,110 @@
+.wrapper {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  .sidebar {
+    width: 25em;
+    padding: 3em;
+    background: #44eded;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    .sidebar-title {
+      text-align: center;
+      h2 {
+        font-weight: bolder;
+      }
+    }
+    .menu {
+      .ui.secondary.vertical.menu {
+        padding-top: 2em;
+        text-align: center;
+        .item {
+          font-weight: bolder;
+          height: 7em;
+          padding-top: 20%;
+          border-radius: 2em !important;
+          width: 100%;
+        }
+      }
+    }
+    .user {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 1em;
+      border-radius: 2em !important;
+      cursor: pointer;
+      img {
+        height: 6em;
+        width: 8em;
+      }
+      .user-name {
+        width: 100%;
+        text-align: center;
+      }
+    }
+    .user:hover {
+      background: rgba(0, 0, 0, 0.05);
+    }
+  }
+  .content-seminar {
+    padding: 3em;
+    width: calc(100vw - 25em);
+    .content-title {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+    }
+    .seminar-table-wrapper {
+      padding: 4em;
+      .detail-seminar {
+        .btn {
+          display: flex;
+          justify-content: space-between;
+          div {
+            button {
+              margin: 10px 20px 10px 0;
+            }
+          }
+        }
+        .add-participants {
+          float: right;
+          button {
+            margin-right: 0px !important;
+          }
+        }
+      }
+      .detail-data {
+        display: flex;
+        justify-content: space-between;
+        .pagination {
+          float: right;
+        }
+      }
+      .help {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        bottom: 10px;
+        .help-row {
+          display: flex;
+          flex-direction: row;
+          margin: 5px 0;
+        }
+      }
+      i {
+        margin-right: 20px;
+      }
+    }
+    .content-main {
+      padding-top: 2em;
+      .ui.card {
+        height: calc(100vh - 10em);
+        width: 100%;
+      }
+    }
+  }
+}

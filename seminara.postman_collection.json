@@ -1,0 +1,428 @@
+{
+	"info": {
+		"_postman_id": "476c6730-834d-4de4-afa6-0de23d31986d",
+		"name": "Seminara Admin",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\" : \"user\",\r\n    \"password\": \"123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:2000/api/admin/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "2000",
+							"path": [
+								"api",
+								"admin",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "MassMailer",
+			"item": [
+				{
+					"name": "Mass Mailer",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXIiLCJpYXQiOjE2MDE1OTI4MDh9.2ciN4yUK6w26TQ_-NCCS5KaSwgcfYYJNZTWbe0eCIVU",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"recipients\" : [\"firmandaivan@gmail.com, 2301170074.ivanfirmanda@gmail.com\"],\r\n    \"subject\": \"Halo Ini dari Postman\",\r\n    \"type\" : \"html\",\r\n    \"content\" : \"<b>Halo Ini Dengan dari Postman<b>\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:2000/api/admin/sendMassMail",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "2000",
+							"path": [
+								"api",
+								"admin",
+								"sendMassMail"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Seminars",
+			"item": [
+				{
+					"name": "New Seminar",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\" : \"Seminar Perjalanan\",\r\n    \"description\" : \"Seminar untuk meningkatkan semangat juang mahasiswa dalam berjalan-jalan\",\r\n    \"date\" : \"2020/01/01\",\r\n    \"durationMinutes\" : 120\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:2000/api/seminars",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "2000",
+							"path": [
+								"api",
+								"seminars"
+							]
+						},
+						"description": "Register Seminar Baru"
+					},
+					"response": []
+				},
+				{
+					"name": "List All Seminar",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:2000/api/seminars",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "2000",
+							"path": [
+								"api",
+								"seminars"
+							]
+						},
+						"description": "Melihat Semua Data Seminar"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Seminar",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:2000/api/seminars/5f7be5cbb30ff20b1c2fdcfe",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "2000",
+							"path": [
+								"api",
+								"seminars",
+								"5f7be5cbb30ff20b1c2fdcfe"
+							]
+						},
+						"description": "endpoint seminars/:id"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Seminar",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\" : \"Seminar Pemanasan\",\r\n    \"description\" : \"Seminar untuk meningkatkan semangat juang mahasiswa untuk berangkat dalam ketiadaan\",\r\n    \"date\" : \"2020/01/01\",\r\n    \"durationMinutes\" : 120\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:2000/api/seminars/5f7be5cbb30ff20b1c2fdcfe",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "2000",
+							"path": [
+								"api",
+								"seminars",
+								"5f7be5cbb30ff20b1c2fdcfe"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Seminar",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:2000/api/seminars/5f7be5cbb30ff20b1c2fdcfe",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "2000",
+							"path": [
+								"api",
+								"seminars",
+								"5f7be5cbb30ff20b1c2fdcfe"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Seminar Participants",
+			"item": [
+				{
+					"name": "Create New Peserta Seminar",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"seminaritemid\" : \"CKFXDIMVT0000Q4W1DN0X98SU\",\r\n    \"name\" : \"Galang Zulhan Dikasaputra\",\r\n    \"email\" : \"galangzulhan@gmail.com\",\r\n    \"phone\" : \"081231269604\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:2000/api/seminar-participants",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "2000",
+							"path": [
+								"api",
+								"seminar-participants"
+							]
+						},
+						"description": "CREATE PARTICIPANT"
+					},
+					"response": []
+				},
+				{
+					"name": "List Peserta Seminar",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:2000/api/seminar/CKFXDIMVT0000Q4W1DN0X98SU/participants",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "2000",
+							"path": [
+								"api",
+								"seminar",
+								"CKFXDIMVT0000Q4W1DN0X98SU",
+								"participants"
+							]
+						},
+						"description": "GET ALL PARTICIPANTS"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Peserta Seminar",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:2000/api/seminar/CKFXDIMVT0000Q4W1DN0X98SU/participants/CKG1WZ8PV0000DSW1CEZD191A",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "2000",
+							"path": [
+								"api",
+								"seminar",
+								"CKFXDIMVT0000Q4W1DN0X98SU",
+								"participants",
+								"CKG1WZ8PV0000DSW1CEZD191A"
+							]
+						},
+						"description": "GET A PARTICIPANT"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Peserta Seminar",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\" : \"Gandalf\",\r\n    \"email\" : \"gandalf@wizard.com\",\r\n    \"phone\" : \"081231269604\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:2000/api/seminar/CKFXDIMVT0000Q4W1DN0X98SU/participants/CKG1WZ8PV0000DSW1CEZD191A",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "2000",
+							"path": [
+								"api",
+								"seminar",
+								"CKFXDIMVT0000Q4W1DN0X98SU",
+								"participants",
+								"CKG1WZ8PV0000DSW1CEZD191A"
+							]
+						},
+						"description": "UPDATE A PARTICIPANT"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Peserta Seminar",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:2000/api/seminar-participants/CKG1WZ8PV0000DSW1CEZD191A",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "2000",
+							"path": [
+								"api",
+								"seminar-participants",
+								"CKG1WZ8PV0000DSW1CEZD191A"
+							]
+						},
+						"description": "DELETE A PARTICIPANT"
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Ping",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjEyMyIsInBhc3N3b3JkIjoiMTIzIiwiaWF0IjoxNjAxNTM0MDY1fQ.i-daJRf2DTnYhrW2JOKWzZuHev2Z6BmEMQhhOqW6nqA"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\" : \"123\",\r\n    \"password\" : \"123\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:2000/api/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "2000",
+					"path": [
+						"api",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Sign to Seminar",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"seminaritemid\" : \"CKFXDIMVT0000Q4W1DN0X98SU\",\r\n    \"name\" : \"Fitriananda Hadi Qumara\",\r\n    \"email\" : \"fitriananda@gmail.com\",\r\n    \"phone\" : \"081231269604\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:2000/api/public/registertoseminar",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "2000",
+					"path": [
+						"api",
+						"public",
+						"registertoseminar"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
