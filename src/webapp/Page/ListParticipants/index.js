@@ -574,6 +574,7 @@ export class ListParticipants extends Component {
                                     phone: item.phone,
                                     email: item.email,
                                     agency: item.agency,
+                                    option:item.option,
                                     modalEdit: true,
                                   })
                                 }
