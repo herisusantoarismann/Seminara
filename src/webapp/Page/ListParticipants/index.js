@@ -833,7 +833,7 @@ export class ListParticipants extends Component {
                         />
                       </Form.Field>
                       <Form.Field>
-                        <label>Bukti</label>
+                        <label>Proof</label>
                         <Form.Input
                           type="file"
                           name="proof"
