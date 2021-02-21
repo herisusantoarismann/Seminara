@@ -174,7 +174,7 @@ class Registration extends React.Component {
                 />
               </Form.Field>
               <Form.Field>
-                <label>Agency</label>
+                <label>Asal Instansi / Universitas</label>
                 <Form.Input
                   placeholder="Agency"
                   type="text"
@@ -185,7 +185,7 @@ class Registration extends React.Component {
                 />
               </Form.Field>
               <Form.Field>
-                <label>Phone</label>
+                <label>Nomor WA</label>
                 <Form.Input
                   placeholder="Phone"
                   name="phone"
@@ -195,10 +195,10 @@ class Registration extends React.Component {
                   required
                 />
               </Form.Field>
-              <Form.Field>Option Pay</Form.Field>
+              <Form.Field>Pilihan Bayar</Form.Field>
               <Form.Field>
                 <Radio
-                  label="Pay"
+                  label="Bayar"
                   name="option"
                   value="Pay"
                   checked={option === "Pay"}
@@ -207,7 +207,7 @@ class Registration extends React.Component {
               </Form.Field>
               <Form.Field>
                 <Radio
-                  label="Free"
+                  label="Gratis"
                   name="option"
                   value="Free"
                   checked={option === "Free"}
