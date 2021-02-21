@@ -286,15 +286,11 @@ export class ListParticipants extends Component {
     e.preventDefault();
     const cookies = new Cookies();
     const formData = new FormData();
-    const nameProof =
-      this.state.agency.replace(/\s/g, "") + this.state.name.replace(/\s/g, "");
     formData.append("name", this.state.name);
     formData.append("email", this.state.email);
     formData.append("agency", this.state.agency);
     formData.append("phone", this.state.phone);
     formData.append("option", this.state.option);
-    formData.append("proof", this.state.proof);
-    formData.append("nameProof", nameProof);
     Swal.fire({
       title: "Updating Seminar",
       text: "Are you sure?",
@@ -767,15 +763,6 @@ export class ListParticipants extends Component {
                           value="Free"
                           checked={option === "Free"}
                           onChange={this.handleRadio}
-                        />
-                      </Form.Field>
-                      <Form.Field>
-                        <label>Bukti</label>
-                        <Form.Input
-                          type="file"
-                          name="proof"
-                          onChange={this.handleImage}
-                          required
                         />
                       </Form.Field>
                       <Button type="submit" primary>
