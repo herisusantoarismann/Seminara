@@ -747,25 +747,6 @@ export class ListParticipants extends Component {
                           required
                         />
                       </Form.Field>
-                      <Form.Field>Option Pay</Form.Field>
-                      <Form.Field>
-                        <Radio
-                          label="Pay"
-                          name="option"
-                          value="Pay"
-                          checked={option === "Pay"}
-                          onChange={this.handleRadio}
-                        />
-                      </Form.Field>
-                      <Form.Field>
-                        <Radio
-                          label="Free"
-                          name="option"
-                          value="Free"
-                          checked={option === "Free"}
-                          onChange={this.handleRadio}
-                        />
-                      </Form.Field>
                       <Button type="submit" primary>
                         Submit
                       </Button>
