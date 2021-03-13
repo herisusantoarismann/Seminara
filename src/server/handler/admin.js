@@ -710,12 +710,10 @@ module.exports = () => {
         option: "Free",
       });
 
-      console.log(result.email);
-
       res.json({
         status: "success",
-        message: "partisipan berhasil ditampilkan",
-        data: result.option,
+        message: "partisipan berhasil free ditampilkan",
+        data: result,
       });
     },
 
