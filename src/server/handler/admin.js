@@ -704,6 +704,21 @@ module.exports = () => {
       });
     },
 
+    ShowParticipantFreeV1: async (req, res) => {
+      const result = await participantsCollection.find({
+        seminaritemid: req.params.idseminar,
+        option: "Free",
+      });
+
+      console.log(result.email);
+
+      res.json({
+        status: "success",
+        message: "partisipan berhasil ditampilkan",
+        data: result,
+      });
+    },
+
     UpdateParticipantV1: async (req, res) => {
       const participantUpdate = {
         name: req.body.name,
