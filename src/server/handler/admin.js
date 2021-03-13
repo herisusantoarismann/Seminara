@@ -713,7 +713,7 @@ module.exports = () => {
       res.json({
         status: "success",
         message: "partisipan berhasil free ditampilkan",
-        data: result.email,
+        data: result,
       });
     },
 
