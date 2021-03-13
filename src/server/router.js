@@ -102,7 +102,7 @@ const main = () => {
     wrap(hpublic.ShowParticipantV1)
   );
   router.get(
-    "/seminars/:idseminar/participants/free",
+    "/seminars/:idseminar/free/participants",
     wrap(hadmin.ShowParticipantFreeV1)
   );
   router.post(
