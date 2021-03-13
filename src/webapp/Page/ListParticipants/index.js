@@ -839,6 +839,7 @@ export class ListParticipants extends Component {
                           name="proof"
                           onChange={this.handleImage}
                           required
+                          multiple
                         />
                       </Form.Field>
                       <Button type="submit" primary>
