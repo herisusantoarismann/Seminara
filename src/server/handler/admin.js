@@ -715,7 +715,7 @@ module.exports = () => {
       res.json({
         status: "success",
         message: "partisipan berhasil ditampilkan",
-        data: result.item,
+        data: result.option,
       });
     },
 
