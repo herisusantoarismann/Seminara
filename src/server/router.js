@@ -101,6 +101,10 @@ const main = () => {
     "/public/seminars/:idseminar/participants/:id",
     wrap(hpublic.ShowParticipantV1)
   );
+  router.get(
+    "/seminars/:idseminar/participants/free",
+    wrap(hpublic.ShowParticipantFreeV1)
+  );
   router.post(
     "/seminar/:idseminar/participants",
     upload.single("proof"),
