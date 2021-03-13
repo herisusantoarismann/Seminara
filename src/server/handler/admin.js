@@ -705,15 +705,18 @@ module.exports = () => {
     },
 
     ShowParticipantFreeV1: async (req, res) => {
-      const result = await participantsCollection.find({
-        seminaritemid: req.params.idseminar,
-        option: "Free",
-      });
+      const result = await participantsCollection.find(
+        {
+          seminaritemid: req.params.idseminar,
+          option: "Free",
+        },
+        { email: 1 }
+      );
 
       res.json({
         status: "success",
-        message: "partisipan berhasil free ditampilkan",
-        data: result,
+        message: "partisipan berhasil ditampilkan",
+        data: result.option,
       });
     },
 
