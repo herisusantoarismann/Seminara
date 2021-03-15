@@ -722,6 +722,38 @@ module.exports = () => {
       });
     },
 
+    ShowParticipantPayV1: async (req, res) => {
+      const result = await participantsCollection.find(
+        {
+          seminaritemid: req.params.idseminar,
+          option: "Pay",
+        },
+        { email: 1 }
+      );
+
+      res.json({
+        status: "success",
+        message: "partisipan berhasil ditampilkan",
+        data: result,
+      });
+    },
+
+    VerifiedParticipantV1: async (req, res) => {
+      await participantsCollection.findOneAndUpdate(
+        {
+          seminaritemid: req.params.idseminar,
+          itemid: req.params.id,
+        },
+        {
+          verified: true,
+        }
+      );
+      res.json({
+        status: "success",
+        message: "partisipan berhasil diverifikasi",
+      });
+    },
+
     UpdateParticipantV1: async (req, res) => {
       const participantUpdate = {
         name: req.body.name,
