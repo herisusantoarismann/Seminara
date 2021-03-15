@@ -622,7 +622,9 @@ module.exports = () => {
         email: req.body.email,
         agency: req.body.agency,
         phone: req.body.phone,
+        option: req.body.option,
         proof: req.body.nameProof + req.file.originalname,
+        verified: false,
       });
       const data = await newParticipants.save();
       res.json({
