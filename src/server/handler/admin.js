@@ -745,7 +745,7 @@ module.exports = () => {
           itemid: req.params.id,
         },
         {
-          verified: true,
+          verified: !this.body.verified,
         }
       );
       res.json({
