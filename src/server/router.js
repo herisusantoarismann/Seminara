@@ -105,6 +105,10 @@ const main = () => {
     "/seminars/:idseminar/free/participants",
     wrap(hadmin.ShowParticipantFreeV1)
   );
+  router.get(
+    "/seminars/:idseminar/pay/participants",
+    wrap(hadmin.ShowParticipantPayV1)
+  );
   router.post(
     "/seminar/:idseminar/participants",
     upload.single("proof"),
@@ -126,6 +130,11 @@ const main = () => {
     "/seminar/:idseminar/participants/:id",
     validateAuth,
     wrap(hadmin.UpdateParticipantV1)
+  );
+  router.put(
+    "/seminar/:idseminar/verified/participants/:id",
+    validateAuth,
+    wrap(hadmin.VerifiedParticipantV1)
   );
   router.delete(
     "/seminar/:idseminar/participants/:id",
