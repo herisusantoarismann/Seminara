@@ -751,8 +751,6 @@ module.exports = () => {
       );
       res.json({
         status: "success",
-        message: "partisipan berhasil diverifikasi",
-        verified: req.body.verified,
       });
     },
 
