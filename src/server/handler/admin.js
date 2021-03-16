@@ -739,18 +739,20 @@ module.exports = () => {
     },
 
     VerifiedParticipantV1: async (req, res) => {
+      const verified = {
+        verified: req.body.verified,
+      };
       await participantsCollection.findOneAndUpdate(
         {
           seminaritemid: req.params.idseminar,
           itemid: req.params.id,
         },
-        {
-          verified: !req.body.verified,
-        }
+        verified
       );
       res.json({
         status: "success",
         message: "partisipan berhasil diverifikasi",
+        verified: req.body.verified,
       });
     },
 
