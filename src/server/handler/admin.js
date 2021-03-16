@@ -751,6 +751,7 @@ module.exports = () => {
       );
       res.json({
         status: "success",
+        verified: req.body.verified,
       });
     },
 
