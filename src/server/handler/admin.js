@@ -790,12 +790,12 @@ module.exports = () => {
         page: req.params.page,
         limit: 5,
       };
-      const AscTitleOption = {
+      const AscNameOption = {
         page: req.params.page,
         limit: 5,
         sort: { name: "ascending" },
       };
-      const DescTitleOption = {
+      const DescNameOption = {
         page: req.params.page,
         limit: 5,
         sort: { name: "descending" },
@@ -809,29 +809,29 @@ module.exports = () => {
           },
           paginateOption
         );
-        var AscTitleData = await participantsCollection.paginate(
+        var AscNameData = await participantsCollection.paginate(
           {
             seminaritemid: req.params.idseminar,
             name: { $regex: keyword, $options: "$i" },
           },
-          AscTitleOption
+          AscNameOption
         );
-        var DescTitleData = await participantsCollection.paginate(
+        var DescNameData = await participantsCollection.paginate(
           {
             seminaritemid: req.params.idseminar,
             name: { $regex: keyword, $options: "$i" },
           },
-          DescTitleOption
+          DescNameOption
         );
       } else {
         var data = await participantsCollection.paginate({}, paginateOption);
-        var AscTitleData = await participantsCollection.paginate(
+        var AscNameData = await participantsCollection.paginate(
           {},
-          AscTitleOption
+          AscNameOption
         );
-        var DescTitleData = await participantsCollection.paginate(
+        var DescNameData = await participantsCollection.paginate(
           {},
-          DescTitleOption
+          DescNameOption
         );
       }
 
@@ -842,12 +842,12 @@ module.exports = () => {
           result: data,
         },
 
-        AscTitleData: {
-          result: AscTitleData,
+        AscNameData: {
+          result: AscNameData,
         },
 
-        DescTitleData: {
-          result: DescTitleData,
+        DescNameData: {
+          result: DescNameData,
         },
         param: req.params.idseminar,
       });
