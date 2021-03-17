@@ -814,24 +814,24 @@ module.exports = () => {
       if (keyword) {
         var data = await participantsCollection.paginate(
           {
-            title: { $regex: keyword, $options: "$i" },
+            name: { $regex: keyword, $options: "$i" },
           },
           paginateOption
         );
         var AscTitleData = await participantsCollection.paginate(
-          { title: { $regex: keyword, $options: "$i" } },
+          { name: { $regex: keyword, $options: "$i" } },
           AscTitleOption
         );
         var AscDateData = await participantsCollection.paginate(
-          { title: { $regex: keyword, $options: "$i" } },
+          { name: { $regex: keyword, $options: "$i" } },
           AscDateOption
         );
         var DescTitleData = await participantsCollection.paginate(
-          { title: { $regex: keyword, $options: "$i" } },
+          { name: { $regex: keyword, $options: "$i" } },
           DescTitleOption
         );
         var DescDateData = await participantsCollection.paginate(
-          { title: { $regex: keyword, $options: "$i" } },
+          { name: { $regex: keyword, $options: "$i" } },
           DescDateOption
         );
       } else {
