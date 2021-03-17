@@ -824,13 +824,16 @@ module.exports = () => {
           DescNameOption
         );
       } else {
-        var data = await participantsCollection.paginate({}, paginateOption);
+        var data = await participantsCollection.paginate(
+          { seminaritemid: req.params.idseminar },
+          paginateOption
+        );
         var AscNameData = await participantsCollection.paginate(
-          {},
+          { seminaritemid: req.params.idseminar },
           AscNameOption
         );
         var DescNameData = await participantsCollection.paginate(
-          {},
+          { seminaritemid: req.params.idseminar },
           DescNameOption
         );
       }
