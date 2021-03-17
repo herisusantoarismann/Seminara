@@ -793,22 +793,12 @@ module.exports = () => {
       const AscTitleOption = {
         page: req.params.page,
         limit: 5,
-        sort: { title: "ascending" },
-      };
-      const AscDateOption = {
-        page: req.params.page,
-        limit: 5,
-        sort: { date: "ascending" },
+        sort: { name: "ascending" },
       };
       const DescTitleOption = {
         page: req.params.page,
         limit: 5,
-        sort: { title: "descending" },
-      };
-      const DescDateOption = {
-        page: req.params.page,
-        limit: 5,
-        sort: { date: "descending" },
+        sort: { name: "descending" },
       };
       const keyword = req.body.keyword;
       if (keyword) {
@@ -885,6 +875,7 @@ module.exports = () => {
         DescTitleData: {
           result: DescTitleData,
         },
+        param: req.params.idseminar,
       });
     },
   };
