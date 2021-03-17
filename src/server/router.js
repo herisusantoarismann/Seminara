@@ -120,6 +120,11 @@ const main = () => {
     validateAuth,
     wrap(hadmin.ShowAllParticipantsV1)
   );
+  router.get(
+    "/seminar/:idseminar/search/participants/:page",
+    validateAuth,
+    wrap(hadmin.FilterParticipantsV1)
+  );
   router.get("/seminar/count/participants", wrap(hadmin.CountParticipantsV1));
   router.get(
     "/seminar/:idseminar/participants/:id",
