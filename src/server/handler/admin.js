@@ -784,5 +784,95 @@ module.exports = () => {
         message: "partisipan berhasil dihapus",
       });
     },
+
+    FilterParticipantsV1: async (req, res) => {
+      const paginateOption = {
+        page: req.params.page,
+        limit: 5,
+      };
+      const AscTitleOption = {
+        page: req.params.page,
+        limit: 5,
+        sort: { title: "ascending" },
+      };
+      const AscDateOption = {
+        page: req.params.page,
+        limit: 5,
+        sort: { date: "ascending" },
+      };
+      const DescTitleOption = {
+        page: req.params.page,
+        limit: 5,
+        sort: { title: "descending" },
+      };
+      const DescDateOption = {
+        page: req.params.page,
+        limit: 5,
+        sort: { date: "descending" },
+      };
+      const keyword = req.body.keyword;
+      if (keyword) {
+        var data = await participantsCollection.paginate(
+          {
+            title: { $regex: keyword, $options: "$i" },
+          },
+          paginateOption
+        );
+        var AscTitleData = await participantsCollection.paginate(
+          { title: { $regex: keyword, $options: "$i" } },
+          AscTitleOption
+        );
+        var AscDateData = await participantsCollection.paginate(
+          { title: { $regex: keyword, $options: "$i" } },
+          AscDateOption
+        );
+        var DescTitleData = await participantsCollection.paginate(
+          { title: { $regex: keyword, $options: "$i" } },
+          DescTitleOption
+        );
+        var DescDateData = await participantsCollection.paginate(
+          { title: { $regex: keyword, $options: "$i" } },
+          DescDateOption
+        );
+      } else {
+        var data = await participantsCollection.paginate({}, paginateOption);
+        var AscTitleData = await participantsCollection.paginate(
+          {},
+          AscTitleOption
+        );
+        var AscDateData = await participantsCollection.paginate(
+          {},
+          AscDateOption
+        );
+        var DescTitleData = await participantsCollection.paginate(
+          {},
+          DescTitleOption
+        );
+        var DescDateData = await participantsCollection.paginate(
+          {},
+          DescDateOption
+        );
+      }
+
+      res.json({
+        status: "Success",
+        message: `Berhasil Menampilkan Participants dengan keyword : ${req.params.keyword}`,
+        data: {
+          result: data,
+        },
+        AscDateData: {
+          result: AscDateData,
+        },
+        AscTitleData: {
+          result: AscTitleData,
+        },
+        DescDateData: {
+          result: DescDateData,
+        },
+        DescTitleData: {
+          result: DescTitleData,
+        },
+      });
+    },
   };
 };
