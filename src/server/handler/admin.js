@@ -814,24 +814,37 @@ module.exports = () => {
       if (keyword) {
         var data = await participantsCollection.paginate(
           {
+            seminaritemid: req.params.idseminar,
             name: { $regex: keyword, $options: "$i" },
           },
           paginateOption
         );
         var AscTitleData = await participantsCollection.paginate(
-          { name: { $regex: keyword, $options: "$i" } },
+          {
+            seminaritemid: req.params.idseminar,
+            name: { $regex: keyword, $options: "$i" },
+          },
           AscTitleOption
         );
         var AscDateData = await participantsCollection.paginate(
-          { name: { $regex: keyword, $options: "$i" } },
+          {
+            seminaritemid: req.params.idseminar,
+            name: { $regex: keyword, $options: "$i" },
+          },
           AscDateOption
         );
         var DescTitleData = await participantsCollection.paginate(
-          { name: { $regex: keyword, $options: "$i" } },
+          {
+            seminaritemid: req.params.idseminar,
+            name: { $regex: keyword, $options: "$i" },
+          },
           DescTitleOption
         );
         var DescDateData = await participantsCollection.paginate(
-          { name: { $regex: keyword, $options: "$i" } },
+          {
+            seminaritemid: req.params.idseminar,
+            name: { $regex: keyword, $options: "$i" },
+          },
           DescDateOption
         );
       } else {
