@@ -816,26 +816,12 @@ module.exports = () => {
           },
           AscTitleOption
         );
-        var AscDateData = await participantsCollection.paginate(
-          {
-            seminaritemid: req.params.idseminar,
-            name: { $regex: keyword, $options: "$i" },
-          },
-          AscDateOption
-        );
         var DescTitleData = await participantsCollection.paginate(
           {
             seminaritemid: req.params.idseminar,
             name: { $regex: keyword, $options: "$i" },
           },
           DescTitleOption
-        );
-        var DescDateData = await participantsCollection.paginate(
-          {
-            seminaritemid: req.params.idseminar,
-            name: { $regex: keyword, $options: "$i" },
-          },
-          DescDateOption
         );
       } else {
         var data = await participantsCollection.paginate({}, paginateOption);
@@ -843,17 +829,9 @@ module.exports = () => {
           {},
           AscTitleOption
         );
-        var AscDateData = await participantsCollection.paginate(
-          {},
-          AscDateOption
-        );
         var DescTitleData = await participantsCollection.paginate(
           {},
           DescTitleOption
-        );
-        var DescDateData = await participantsCollection.paginate(
-          {},
-          DescDateOption
         );
       }
 
@@ -863,15 +841,11 @@ module.exports = () => {
         data: {
           result: data,
         },
-        AscDateData: {
-          result: AscDateData,
-        },
+
         AscTitleData: {
           result: AscTitleData,
         },
-        DescDateData: {
-          result: DescDateData,
-        },
+
         DescTitleData: {
           result: DescTitleData,
         },
