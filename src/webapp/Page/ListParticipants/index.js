@@ -13,6 +13,11 @@ import {
   Pagination,
   Transition,
   Radio,
+  Checkbox,
+  List,
+  TransitionablePortal,
+  Segment,
+  Header,
 } from "semantic-ui-react";
 import "semantic-ui-css/semantic.min.css";
 import "./style.scss";
@@ -26,6 +31,7 @@ export class ListParticipants extends Component {
     super();
     this.state = {
       _id: "",
+      seminaritemid: "",
       itemid: "",
       title: "",
       partner: "",
@@ -36,18 +42,26 @@ export class ListParticipants extends Component {
       durationMinutes: "",
       modalOpen: false,
       modalEdit: false,
+      modalDetail: false,
       openProof: false,
+      openFree: false,
+      openPay: false,
+      openPortalVerification: false,
       data: [],
       item: [],
       AscData: [],
       DescData: [],
       idParticipants: "",
+      freeParticipants: [],
+      payParticipants: [],
       name: "",
       phone: "",
       agency: "",
       email: "",
       proof: "",
       option: "",
+      verified: "",
+      keyword: "",
       ActivePage: 1,
       totalPages: "",
       totalDocs: "",
@@ -133,8 +147,65 @@ export class ListParticipants extends Component {
               text: err,
             });
           });
+        fetch(
+          process.env.REACT_APP_SERVER +
+            "seminars/" +
+            res.data.itemid +
+            "/free/participants/",
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: token,
+            },
+          }
+        )
+          .then((res) => {
+            return res.json();
+          })
+          .then((res) => {
+            this.setState({
+              freeParticipants: res.data,
+            });
+          })
+          .catch((err) => {
+            Swal.fire({
+              icon: "error",
+              title: "Something went wrong!",
+              text: err,
+            });
+          });
+        fetch(
+          process.env.REACT_APP_SERVER +
+            "seminars/" +
+            res.data.itemid +
+            "/pay/participants/",
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: token,
+            },
+          }
+        )
+          .then((res) => {
+            return res.json();
+          })
+          .then((res) => {
+            this.setState({
+              payParticipants: res.data,
+            });
+          })
+          .catch((err) => {
+            Swal.fire({
+              icon: "error",
+              title: "Something went wrong!",
+              text: err,
+            });
+          });
         this.setState({
           _id: res.data._id,
+          seminaritemid: res.data.seminaritemid,
           itemid: res.data.itemid,
           title: res.data.title,
           partner: res.data.partner,
@@ -286,11 +357,15 @@ export class ListParticipants extends Component {
     e.preventDefault();
     const cookies = new Cookies();
     const formData = new FormData();
+    const nameProof =
+      this.state.agency.replace(/\s/g, "") + this.state.name.replace(/\s/g, "");
     formData.append("name", this.state.name);
     formData.append("email", this.state.email);
     formData.append("agency", this.state.agency);
     formData.append("phone", this.state.phone);
     formData.append("option", this.state.option);
+    formData.append("proof", this.state.proof);
+    formData.append("nameProof", nameProof);
     Swal.fire({
       title: "Updating Seminar",
       text: "Are you sure?",
@@ -386,6 +461,106 @@ export class ListParticipants extends Component {
     });
   };
 
+  handleVerificationChange = (seminaritemid, itemid, verified) => {
+    const cookies = new Cookies();
+    fetch(
+      process.env.REACT_APP_SERVER +
+        "seminar/" +
+        seminaritemid +
+        "/verified/participants/" +
+        itemid,
+      {
+        method: "PUT",
+        body: JSON.stringify({
+          verified: !verified,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: cookies.get("jwt"),
+        },
+      }
+    )
+      .then((res) => res.json())
+      .then((res) => {
+        if (res.status === "success") {
+          this.setState({
+            openPortalVerification: true,
+          });
+          setTimeout(() => {
+            this.setState({
+              openPortalVerification: false,
+            });
+            window.location.reload();
+          }, 3000);
+        }
+      })
+      .catch((err) => {
+        Swal.fire({
+          icon: "error",
+          title: "Something went wrong!",
+          text: err,
+        });
+      });
+  };
+
+  // function to handle input
+  handleSearch = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
+    this.setState({ [name]: value });
+    this.fetchSearch(1, value);
+  };
+
+  handleCopy = (list) => {
+    var participantsList = {};
+    list.map((item, index) => {
+      participantsList[index] = item.email;
+    });
+    participantsList = Object.values(participantsList);
+    participantsList = participantsList.join("\n");
+    navigator.clipboard.writeText(participantsList);
+  };
+
+  // function to get Filter data
+  fetchSearch = (page, value) => {
+    const cookies = new Cookies();
+    fetch(
+      process.env.REACT_APP_SERVER +
+        "/seminar/" +
+        this.state.itemid +
+        "/search/participants/" +
+        page,
+      {
+        method: "POST",
+        body: JSON.stringify({
+          keyword: value,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: cookies.get("jwt"),
+        },
+      }
+    )
+      .then((res) => res.json())
+      .then((res) => {
+        if (res.status === "Success") {
+          this.setState({
+            AscData: res.AscNameData.result.docs,
+            DescData: res.DescNameData.result.docs,
+            item: res.data.result.docs,
+            totalDocs: res.data.result.totalDocs,
+          });
+        }
+      })
+      .catch((err) => {
+        Swal.fire({
+          icon: "error",
+          title: "Something went wrong!",
+          text: err,
+        });
+      });
+  };
+
   render() {
     const {
       activeItem,
@@ -399,16 +574,25 @@ export class ListParticipants extends Component {
       durationMinutes,
       modalOpen,
       modalEdit,
+      modalDetail,
       openProof,
+      openFree,
+      openPay,
+      openPortalVerification,
+      freeParticipants,
+      payParticipants,
       name,
       phone,
       agency,
       email,
       proof,
       option,
+      verified,
+      keyword,
       data,
       item,
       itemid,
+      seminaritemid,
       ActivePage,
       totalPages,
       totalDocs,
@@ -521,8 +705,6 @@ export class ListParticipants extends Component {
                               this.handleDelete(_id);
                             }}
                           />
-                        </div>
-                        <div className="seminar-detail btn add-participants">
                           <Button
                             icon="add"
                             size="tiny"
@@ -533,6 +715,19 @@ export class ListParticipants extends Component {
                                 modalOpen: true,
                               })
                             }
+                          />
+                        </div>
+                        <div
+                          style={{
+                            float: "right",
+                          }}
+                        >
+                          <Input
+                            icon="search"
+                            name="keyword"
+                            value={keyword}
+                            placeholder="Search..."
+                            onChange={this.handleSearch}
                           />
                         </div>
                       </div>
@@ -548,9 +743,9 @@ export class ListParticipants extends Component {
                           </Table.HeaderCell>
                           <Table.HeaderCell>Email</Table.HeaderCell>
                           <Table.HeaderCell>Agency</Table.HeaderCell>
-                          <Table.HeaderCell>Phone</Table.HeaderCell>
-                          <Table.HeaderCell>Action</Table.HeaderCell>
                           <Table.HeaderCell>Proof</Table.HeaderCell>
+                          <Table.HeaderCell>Verification</Table.HeaderCell>
+                          <Table.HeaderCell>Action</Table.HeaderCell>
                         </Table.Row>
                       </Table.Header>
 
@@ -560,7 +755,33 @@ export class ListParticipants extends Component {
                             <Table.Cell>{item.name}</Table.Cell>
                             <Table.Cell>{item.email}</Table.Cell>
                             <Table.Cell>{item.agency}</Table.Cell>
-                            <Table.Cell>{item.phone}</Table.Cell>
+                            <Table.Cell>
+                              <Icon
+                                link
+                                bordered
+                                inverted
+                                name="image"
+                                onClick={() => {
+                                  this.setState({
+                                    seminaritemid: item.seminaritemid,
+                                    itemid: item.itemid,
+                                    proof:
+                                      process.env.REACT_APP_URL_ASSETS +
+                                      item.proof,
+                                    openProof: true,
+                                    option: item.option,
+                                    verified: item.verified,
+                                  });
+                                }}
+                              />
+                            </Table.Cell>
+                            <Table.Cell>
+                              {item.verified ? (
+                                <Button positive>Verified</Button>
+                              ) : (
+                                <Button negative>Not Verified</Button>
+                              )}
+                            </Table.Cell>
                             <Table.Cell>
                               <Button
                                 icon="edit"
@@ -568,16 +789,36 @@ export class ListParticipants extends Component {
                                 color="yellow"
                                 onClick={() =>
                                   this.setState({
-                                    itemid: item.seminaritemid,
-                                    idParticipants: item.itemid,
                                     name: item.name,
                                     phone: item.phone,
                                     email: item.email,
                                     agency: item.agency,
-                                    option:item.option,
+                                    option: item.option,
+                                    proof:
+                                      process.env.REACT_APP_URL_ASSETS +
+                                      item.proof,
                                     modalEdit: true,
                                   })
                                 }
+                              />
+
+                              <Button
+                                color="green"
+                                size="mini"
+                                icon="zoom"
+                                onClick={() => {
+                                  this.setState({
+                                    name: item.name,
+                                    phone: item.phone,
+                                    email: item.email,
+                                    agency: item.agency,
+                                    option: item.option,
+                                    proof:
+                                      process.env.REACT_APP_URL_ASSETS +
+                                      item.proof,
+                                    modalDetail: true,
+                                  });
+                                }}
                               />
 
                               <Icon
@@ -591,23 +832,6 @@ export class ListParticipants extends Component {
                                     item.seminaritemid,
                                     item.itemid
                                   );
-                                }}
-                              />
-                            </Table.Cell>
-                            <Table.Cell>
-                              <Icon
-                                link
-                                bordered
-                                inverted
-                                name="image"
-                                onClick={() => {
-                                  this.setState({
-                                    proof:
-                                      process.env.REACT_APP_URL_ASSETS +
-                                      item.proof,
-                                    openProof: true,
-                                    option: item.option,
-                                  });
                                 }}
                               />
                             </Table.Cell>
@@ -655,6 +879,26 @@ export class ListParticipants extends Component {
                         )}
                       </div>
                     </div>
+                    <Button
+                      size="small"
+                      color="blue"
+                      content="List Free Participants"
+                      onClick={() =>
+                        this.setState({
+                          openFree: true,
+                        })
+                      }
+                    />
+                    <Button
+                      size="small"
+                      color="blue"
+                      content="List Pay Participants"
+                      onClick={() =>
+                        this.setState({
+                          openPay: true,
+                        })
+                      }
+                    />
                     <div className="help">
                       <div className="help-row">
                         <Icon
@@ -747,6 +991,34 @@ export class ListParticipants extends Component {
                           required
                         />
                       </Form.Field>
+                      <Form.Field>Option Pay</Form.Field>
+                      <Form.Field>
+                        <Radio
+                          label="Pay"
+                          name="option"
+                          value="Pay"
+                          checked={option === "Pay"}
+                          onChange={this.handleRadio}
+                        />
+                      </Form.Field>
+                      <Form.Field>
+                        <Radio
+                          label="Free"
+                          name="option"
+                          value="Free"
+                          checked={option === "Free"}
+                          onChange={this.handleRadio}
+                        />
+                      </Form.Field>
+                      <Form.Field>
+                        <label>Bukti</label>
+                        <Form.Input
+                          type="file"
+                          name="proof"
+                          onChange={this.handleImage}
+                          required
+                        />
+                      </Form.Field>
                       <Button type="submit" primary>
                         Submit
                       </Button>
@@ -833,13 +1105,12 @@ export class ListParticipants extends Component {
                         />
                       </Form.Field>
                       <Form.Field>
-                        <label>Proof</label>
+                        <label>Bukti</label>
                         <Form.Input
                           type="file"
                           name="proof"
                           onChange={this.handleImage}
                           required
-                          multiple
                         />
                       </Form.Field>
                       <Button type="submit" primary>
@@ -863,8 +1134,185 @@ export class ListParticipants extends Component {
                 }
                 closeOnDimmerClick={false}
               >
-                <Modal.Header>Proof ({option})</Modal.Header>
+                <Modal.Header>
+                  <div
+                    className="show-proof"
+                    style={{ display: "flex", justifyContent: "space-between" }}
+                  >
+                    <div>Proof ({option})</div>
+                    <div>
+                      {verified ? (
+                        <Checkbox
+                          slider
+                          defaultChecked
+                          label="Verification"
+                          onChange={() =>
+                            this.handleVerificationChange(
+                              seminaritemid,
+                              itemid,
+                              verified
+                            )
+                          }
+                        />
+                      ) : (
+                        <Checkbox
+                          slider
+                          label="Verification"
+                          onChange={() =>
+                            this.handleVerificationChange(
+                              seminaritemid,
+                              itemid,
+                              verified
+                            )
+                          }
+                        />
+                      )}
+                    </div>
+                  </div>
+                </Modal.Header>
                 <Modal.Content>
+                  <Image src={proof} fluid />
+                </Modal.Content>
+              </Modal>
+            )}
+          </Transition.Group>
+          <TransitionablePortal
+            open={openPortalVerification}
+            transition={{ animation: "fade down", duration: 500 }}
+            closeOnDimmerClick={false}
+          >
+            <Segment
+              style={{
+                right: "50%",
+                position: "absolute",
+                top: "50%",
+                zIndex: 1000,
+              }}
+            >
+              <Header>Verification</Header>
+              <p>Successful {verified ? "verification" : "unverification"}</p>
+            </Segment>
+          </TransitionablePortal>
+          <Transition.Group open={openFree} animation="fly up" duration={800}>
+            {openFree && (
+              <Modal
+                open={openFree}
+                closeIcon
+                onClose={() =>
+                  this.setState({
+                    openFree: false,
+                  })
+                }
+                closeOnDimmerClick={false}
+              >
+                <Modal.Header>List Free</Modal.Header>
+                <Modal.Content>
+                  <List>
+                    {freeParticipants.map((item) => (
+                      <List.Item>{item.email}</List.Item>
+                    ))}
+                  </List>
+                </Modal.Content>
+                <Modal.Description>
+                  <div
+                    style={{
+                      padding: "10px 20px",
+                      borderTop: "1px solid rgba(0,0,0,0.15",
+                    }}
+                  >
+                    {" "}
+                    <Button
+                      color="blue"
+                      size="small"
+                      onClick={() => this.handleCopy(freeParticipants)}
+                    >
+                      <Icon name="copy outline" /> Copy All
+                    </Button>
+                  </div>
+                </Modal.Description>
+              </Modal>
+            )}
+          </Transition.Group>
+          <Transition.Group open={openPay} animation="fly up" duration={800}>
+            {openPay && (
+              <Modal
+                open={openPay}
+                closeIcon
+                onClose={() =>
+                  this.setState({
+                    openPay: false,
+                  })
+                }
+                closeOnDimmerClick={false}
+              >
+                <Modal.Header>List Pay</Modal.Header>
+                <Modal.Content>
+                  <List>
+                    {payParticipants.map((item) => (
+                      <List.Item>{item.email}</List.Item>
+                    ))}
+                  </List>
+                </Modal.Content>
+                <Modal.Description>
+                  <div
+                    style={{
+                      padding: "10px 20px",
+                      borderTop: "1px solid rgba(0,0,0,0.15",
+                    }}
+                  >
+                    {" "}
+                    <Button
+                      color="blue"
+                      size="small"
+                      onClick={() => this.handleCopy(payParticipants)}
+                    >
+                      <Icon name="copy outline" /> Copy All
+                    </Button>
+                  </div>
+                </Modal.Description>
+              </Modal>
+            )}
+          </Transition.Group>
+          <Transition.Group
+            open={modalDetail}
+            animation="fly up"
+            duration={800}
+          >
+            {modalDetail && (
+              <Modal
+                open={modalDetail}
+                closeIcon
+                onClose={() =>
+                  this.setState({
+                    modalDetail: false,
+                  })
+                }
+                closeOnDimmerClick={false}
+              >
+                <Modal.Header>Participants</Modal.Header>
+                <Modal.Content>
+                  <List selection verticalAlign="middle">
+                    <List.Item>
+                      <List.Icon name="user" />
+                      <List.Content>{name}</List.Content>
+                    </List.Item>
+                    <List.Item>
+                      <List.Icon name="mail" />
+                      <List.Content>{email}</List.Content>
+                    </List.Item>
+                    <List.Item>
+                      <List.Icon name="phone" />
+                      <List.Content>{phone}</List.Content>
+                    </List.Item>
+                    <List.Item>
+                      <List.Icon name="building" />
+                      <List.Content>{agency}</List.Content>
+                    </List.Item>
+                    <List.Item>
+                      <List.Icon name="image" />
+                      <List.Content>{option}</List.Content>
+                    </List.Item>
+                  </List>
                   <Image src={proof} fluid />
                 </Modal.Content>
               </Modal>
