@@ -9,6 +9,8 @@ import {
   Icon,
   Pagination,
   Input,
+  Modal,
+  Transition,
 } from "semantic-ui-react";
 import "semantic-ui-css/semantic.min.css";
 import "./style.scss";
@@ -37,6 +39,7 @@ class Home extends Component {
       DateSort: true,
       CountParticipants: "",
       keyword: "",
+      openHelp: false,
       activeItem: "Home",
     };
 
@@ -446,6 +449,7 @@ class Home extends Component {
       DateSort,
       item,
       keyword,
+      openHelp,
     } = this.state;
 
     return (
@@ -667,50 +671,80 @@ class Home extends Component {
                       )}
                     </div>
                   </div>
-                  <div className="help">
-                    <div className="help-row">
-                      <Icon
-                        link
-                        bordered
-                        inverted
-                        color="yellow"
-                        name="edit outline"
-                      />
-                      <p>: To Edit Data</p>
-                    </div>
-                    <div className="help-row">
-                      <Icon
-                        link
-                        bordered
-                        inverted
-                        color="green"
-                        name="zoom-in"
-                      />
-                      <p> : For Detailed Data (or View Participants)</p>
-                    </div>
-                    <div className="help-row">
-                      <Icon link bordered inverted color="red" name="delete" />
-                      <p>: To Delete Data</p>
-                    </div>
-                    <div className="help-row">
-                      <Icon
-                        link
-                        bordered
-                        inverted
-                        color="blue"
-                        name="registered"
-                      />
-                      <p>
-                        : For Participant Registration (Link is Copied
-                        Automatically)
-                      </p>
-                    </div>
+                  <div
+                    style={{
+                      position: "absolute",
+                      bottom: "20px",
+                      right: "50px",
+                    }}
+                  >
+                    <Icon
+                      link
+                      name="help"
+                      color="blue"
+                      onClick={() =>
+                        this.setState({
+                          openHelp: true,
+                        })
+                      }
+                    />
                   </div>
                 </div>
               </Card>
             </div>
           </div>
         </div>
+        <Transition.Group open={openHelp} animation="fly up" duration={800}>
+          {openHelp && (
+            <Modal
+              open={openHelp}
+              closeIcon
+              onClose={() =>
+                this.setState({
+                  openHelp: false,
+                })
+              }
+              closeOnDimmerClick={false}
+            >
+              <Modal.Header>Help</Modal.Header>
+              <Modal.Content>
+                <div className="help">
+                  <div className="help-row">
+                    <Icon
+                      link
+                      bordered
+                      inverted
+                      color="yellow"
+                      name="edit outline"
+                    />
+                    <p>: To Edit Data</p>
+                  </div>
+                  <div className="help-row">
+                    <Icon link bordered inverted color="green" name="zoom-in" />
+                    <p> : For Detailed Data (or View Participants)</p>
+                  </div>
+                  <div className="help-row">
+                    <Icon link bordered inverted color="red" name="delete" />
+                    <p>: To Delete Data</p>
+                  </div>
+                  <div className="help-row">
+                    <Icon
+                      link
+                      bordered
+                      inverted
+                      color="blue"
+                      name="registered"
+                    />
+                    <p>
+                      : For Participant Registration (Link is Copied
+                      Automatically)
+                    </p>
+                  </div>
+                </div>
+              </Modal.Content>
+            </Modal>
+          )}
+        </Transition.Group>
       </Fragment>
     );
   }
