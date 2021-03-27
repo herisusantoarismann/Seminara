@@ -47,6 +47,8 @@ export class ListParticipants extends Component {
       openFree: false,
       openPay: false,
       openPortalVerification: false,
+      openCopyLink: false,
+      openHelp: false,
       data: [],
       item: [],
       AscData: [],
@@ -519,6 +521,9 @@ export class ListParticipants extends Component {
     participantsList = Object.values(participantsList);
     participantsList = participantsList.join("\n");
     navigator.clipboard.writeText(participantsList);
+    this.setState({
+      openCopyLink: true,
+    });
   };
 
   // function to get Filter data
@@ -579,6 +584,8 @@ export class ListParticipants extends Component {
       openFree,
       openPay,
       openPortalVerification,
+      openCopyLink,
+      openHelp,
       freeParticipants,
       payParticipants,
       name,
@@ -899,31 +906,23 @@ export class ListParticipants extends Component {
                         })
                       }
                     />
-                    <div className="help">
-                      <div className="help-row">
-                        <Icon
-                          link
-                          bordered
-                          inverted
-                          color="yellow"
-                          name="edit outline"
-                        />
-                        <p>: To Edit Data</p>
-                      </div>
-                      <div className="help-row">
-                        <Icon
-                          link
-                          bordered
-                          inverted
-                          color="red"
-                          name="delete"
-                        />
-                        <p>: To Delete Data</p>
-                      </div>
-                      <div className="help-row">
-                        <Icon link bordered inverted name="image outline" />
-                        <p>: To Show Proof of Payment</p>
-                      </div>
+                    <div
+                      style={{
+                        position: "absolute",
+                        bottom: "20px",
+                        right: "50px",
+                      }}
+                    >
+                      <Icon
+                        link
+                        name="help"
+                        color="blue"
+                        onClick={() =>
+                          this.setState({
+                            openHelp: true,
+                          })
+                        }
+                      />
                     </div>
                   </div>
                 </Card>
@@ -1183,14 +1182,36 @@ export class ListParticipants extends Component {
           >
             <Segment
               style={{
-                right: "50%",
+                right: "0",
                 position: "absolute",
-                top: "50%",
+                top: "0",
                 zIndex: 1000,
               }}
             >
               <Header>Verification</Header>
-              <p>Successful {verified ? "verification" : "unverification"}</p>
+              <p>Successful {verified ? "unverification" : "verification"}</p>
+            </Segment>
+          </TransitionablePortal>
+          <TransitionablePortal
+            onClose={() =>
+              this.setState({
+                openCopyLink: false,
+              })
+            }
+            open={openCopyLink}
+            transition={{ animation: "fade down", duration: 500 }}
+            closeOnDimmerClick={true}
+          >
+            <Segment
+              style={{
+                right: "0",
+                position: "absolute",
+                top: "0",
+                zIndex: 1000,
+              }}
+            >
+              <Header>Success</Header>
+              <p>Successfully Copied Link</p>
             </Segment>
           </TransitionablePortal>
           <Transition.Group open={openFree} animation="fly up" duration={800}>
@@ -1270,6 +1291,44 @@ export class ListParticipants extends Component {
                     </Button>
                   </div>
                 </Modal.Description>
+              </Modal>
+            )}
+          </Transition.Group>
+          <Transition.Group open={openHelp} animation="fly up" duration={800}>
+            {openHelp && (
+              <Modal
+                open={openHelp}
+                closeIcon
+                onClose={() =>
+                  this.setState({
+                    openHelp: false,
+                  })
+                }
+                closeOnDimmerClick={false}
+              >
+                <Modal.Header>Help</Modal.Header>
+                <Modal.Content>
+                  <div className="help">
+                    <div className="help-row">
+                      <Icon
+                        link
+                        bordered
+                        inverted
+                        color="yellow"
+                        name="edit outline"
+                      />
+                      <p>: To Edit Data</p>
+                    </div>
+                    <div className="help-row">
+                      <Icon link bordered inverted color="red" name="delete" />
+                      <p>: To Delete Data</p>
+                    </div>
+                    <div className="help-row">
+                      <Icon link bordered inverted name="image outline" />
+                      <p>: To Show Proof of Payment</p>
+                    </div>
+                  </div>
+                </Modal.Content>
               </Modal>
             )}
           </Transition.Group>
