@@ -937,6 +937,12 @@ export class ListParticipants extends Component {
                 onClose={() =>
                   this.setState({
                     modalEdit: false,
+                    name: "",
+                    email: "",
+                    agency: "",
+                    phone: "",
+                    option: "",
+                    proof: "",
                   })
                 }
                 closeOnDimmerClick={false}
@@ -1035,6 +1041,12 @@ export class ListParticipants extends Component {
                 onClose={() =>
                   this.setState({
                     modalOpen: false,
+                    name: "",
+                    email: "",
+                    agency: "",
+                    phone: "",
+                    option: "",
+                    proof: "",
                   })
                 }
                 closeOnDimmerClick={false}
@@ -1344,6 +1356,12 @@ export class ListParticipants extends Component {
                 onClose={() =>
                   this.setState({
                     modalDetail: false,
+                    name: "",
+                    email: "",
+                    agency: "",
+                    phone: "",
+                    option: "",
+                    proof: "",
                   })
                 }
                 closeOnDimmerClick={false}
