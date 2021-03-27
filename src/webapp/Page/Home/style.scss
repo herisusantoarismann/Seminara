@@ -102,17 +102,6 @@
           float: right;
         }
       }
-      .help {
-        display: flex;
-        flex-direction: column;
-        position: absolute;
-        bottom: 10px;
-        .help-row {
-          display: flex;
-          flex-direction: row;
-          margin: 5px 0;
-        }
-      }
     }
     .content-home {
       padding-top: 2em;
@@ -121,5 +110,15 @@
         width: 100%;
       }
     }
+  }
+}
+.help {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  .help-row {
+    display: flex;
+    flex-direction: row;
+    margin: 5px 0;
   }
 }
