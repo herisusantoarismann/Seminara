@@ -28,7 +28,9 @@ module.exports = () => {
   app.get("/", (req, res) =>
     res.sendFile(relpath("src/static-site", "index.html"))
   );
-  app.get("/teams", express.static("src/static-site/teams.html"));
+  app.get("/teams", (req, res) =>
+    res.sendFile(relpath("src/static-site", "teams.html"))
+  );
 
   app.get("/app/*", (req, res) =>
     res.sendFile(relpath("build", "webapp.html"))
