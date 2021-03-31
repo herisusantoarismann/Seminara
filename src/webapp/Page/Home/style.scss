@@ -4,7 +4,7 @@
   width: 100vw;
   background: #f9fafb;
   .sidebar {
-    width: 25%;
+    width: 25% !important;
     padding: 3em;
     background: #2185d0 !important;
     height: 100%;
@@ -80,7 +80,7 @@
       }
     }
     .seminar-table-wrapper {
-      padding: 1em 4em;
+      padding: 2em !important;
       position: relative;
       overflow-y: auto;
       .input-search {
