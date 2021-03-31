@@ -4,7 +4,7 @@
   width: 100vw;
   background: #f9fafb;
   .sidebar {
-    width: 25em;
+    width: 25%;
     padding: 3em;
     background: #2185d0 !important;
     height: 100%;
@@ -68,6 +68,7 @@
       .ui.cards {
         width: 100%;
         justify-content: space-evenly;
+        font-size: 0.9em;
         .ui.card {
           width: 14%;
           .content:not(:first-child):not(:last-child) {
@@ -80,6 +81,8 @@
     }
     .seminar-table-wrapper {
       padding: 1em 4em;
+      position: relative;
+      overflow-y: auto;
       .input-search {
         float: right;
         padding-bottom: 1em;
