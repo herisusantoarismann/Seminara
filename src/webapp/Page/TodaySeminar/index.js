@@ -8,6 +8,8 @@ import {
   Table,
   Icon,
   Pagination,
+  Modal,
+  Transition,
 } from "semantic-ui-react";
 import "semantic-ui-css/semantic.min.css";
 import Cookies from "universal-cookie";
@@ -25,6 +27,7 @@ class TodaySeminar extends Component {
       DescTitleData: [],
       AscDateData: [],
       DescDateData: [],
+      openHelp: false,
       TitleSort: true,
       DateSort: true,
       ActivePage: 1,
@@ -228,6 +231,7 @@ class TodaySeminar extends Component {
     const {
       activeItem,
       data,
+      openHelp,
       ActivePage,
       totalPages,
       totalDocs,
@@ -409,50 +413,80 @@ class TodaySeminar extends Component {
                       )}
                     </div>
                   </div>
-                  <div className="help">
-                    <div className="help-row">
-                      <Icon
-                        link
-                        bordered
-                        inverted
-                        color="yellow"
-                        name="edit outline"
-                      />
-                      <p>: To Edit Data</p>
-                    </div>
-                    <div className="help-row">
-                      <Icon
-                        link
-                        bordered
-                        inverted
-                        color="green"
-                        name="zoom-in"
-                      />
-                      <p> : For Detailed Data (or View Participants)</p>
-                    </div>
-                    <div className="help-row">
-                      <Icon link bordered inverted color="red" name="delete" />
-                      <p>: To Delete Data</p>
-                    </div>
-                    <div className="help-row">
-                      <Icon
-                        link
-                        bordered
-                        inverted
-                        color="blue"
-                        name="registered"
-                      />
-                      <p>
-                        : For Participant Registration (Link is Copied
-                        Automatically)
-                      </p>
-                    </div>
+                  <div
+                    style={{
+                      position: "relative",
+                      float: "right",
+                      padding: "20px 20px",
+                    }}
+                  >
+                    <Icon
+                      link
+                      name="help"
+                      color="blue"
+                      onClick={() =>
+                        this.setState({
+                          openHelp: true,
+                        })
+                      }
+                    />
                   </div>
                 </div>
               </Card>
             </div>
           </div>
         </div>
+        <Transition.Group open={openHelp} animation="fly up" duration={800}>
+          {openHelp && (
+            <Modal
+              open={openHelp}
+              closeIcon
+              onClose={() =>
+                this.setState({
+                  openHelp: false,
+                })
+              }
+              closeOnDimmerClick={false}
+            >
+              <Modal.Header>Help</Modal.Header>
+              <Modal.Content>
+                <div className="help">
+                  <div className="help-row">
+                    <Icon
+                      link
+                      bordered
+                      inverted
+                      color="yellow"
+                      name="edit outline"
+                    />
+                    <p>: To Edit Data</p>
+                  </div>
+                  <div className="help-row">
+                    <Icon link bordered inverted color="green" name="zoom-in" />
+                    <p> : For Detailed Data (or View Participants)</p>
+                  </div>
+                  <div className="help-row">
+                    <Icon link bordered inverted color="red" name="delete" />
+                    <p>: To Delete Data</p>
+                  </div>
+                  <div className="help-row">
+                    <Icon
+                      link
+                      bordered
+                      inverted
+                      color="blue"
+                      name="registered"
+                    />
+                    <p>
+                      : For Participant Registration (Link is Copied
+                      Automatically)
+                    </p>
+                  </div>
+                </div>
+              </Modal.Content>
+            </Modal>
+          )}
+        </Transition.Group>
       </Fragment>
     );
   }
