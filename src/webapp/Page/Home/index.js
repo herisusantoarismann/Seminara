@@ -673,9 +673,9 @@ class Home extends Component {
                   </div>
                   <div
                     style={{
-                      position: "absolute",
-                      bottom: "20px",
-                      right: "50px",
+                      position: "relative",
+                      float: "right",
+                      padding: "20px 20px",
                     }}
                   >
                     <Icon
