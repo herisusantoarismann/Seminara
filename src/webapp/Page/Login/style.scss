@@ -2,19 +2,23 @@ body {
   overflow-y: hidden;
   font-weight: 700;
   .login-wrapper {
-    position: relative;
-    margin: 150px auto;
-    width: 400px;
-    background: #f9fafb;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
     .login-logo {
       img {
         margin: auto;
-        width: 100px;
+        width: 10em;
       }
     }
     .login-title {
       margin: 20px;
       text-align: center;
+      h2 {
+        font-size: 1.8em;
+        font-weight: 800;
+      }
     }
     .ui.card {
       width: 100%;
