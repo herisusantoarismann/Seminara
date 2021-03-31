@@ -1,5 +1,6 @@
 .input-wrapper {
-  margin: 20px;
+  overflow: auto;
+  padding: 2em;
   .ui.form {
     .field {
       .massmailer-title-input {
