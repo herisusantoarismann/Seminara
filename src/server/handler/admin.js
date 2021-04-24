@@ -684,7 +684,7 @@ module.exports = () => {
     },
 
     ShowAllParticipantsV2: async (req, res) => {
-      const result = await participantsCollection.paginate({
+      const result = await participantsCollection({
         seminaritemid: req.params.idseminar,
       });
 
