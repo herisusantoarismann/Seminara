@@ -683,6 +683,20 @@ module.exports = () => {
       });
     },
 
+    ShowAllParticipantsV2: async (req, res) => {
+      const result = await participantsCollection.paginate({
+        seminaritemid: req.params.idseminar,
+      });
+
+      res.json({
+        status: "success",
+        message: "Semua partisipan berhasil ditampilkan",
+        data: {
+          result: result,
+        },
+      });
+    },
+
     CountParticipantsV1: async (req, res) => {
       const result = await participantsCollection.countDocuments({});
 
