@@ -684,7 +684,7 @@ module.exports = () => {
     },
 
     ShowAllParticipantsV2: async (req, res) => {
-      const result = await participantsCollection({
+      const result = await participantsCollection.find({
         seminaritemid: req.params.idseminar,
       });
 
