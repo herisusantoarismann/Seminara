@@ -121,7 +121,7 @@ const main = () => {
     wrap(hadmin.ShowAllParticipantsV1)
   );
   router.get(
-    "/seminar/:idseminar/participants/all",
+    "/seminar/:idseminar/all/participants",
     validateAuth,
     wrap(hadmin.ShowAllParticipantsV2)
   );
