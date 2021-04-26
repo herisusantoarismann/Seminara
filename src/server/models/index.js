@@ -23,7 +23,7 @@ const SeminarSchema = new Schema({
   date: Date,
   starthour: String,
   durationMinutes: Number,
-  qutoa: Number,
+  quota: Number,
 });
 SeminarSchema.plugin(mongoosePaginate);
 
