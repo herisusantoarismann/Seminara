@@ -73,7 +73,7 @@ module.exports = () => {
           date: newSeminar.date,
           starthour: newSeminar.starthour,
           durationMinutes: newSeminar.durationMinutes,
-          qutoa: NewSeminar.quota,
+          quota: NewSeminar.quota,
         },
       });
     },
@@ -592,7 +592,7 @@ module.exports = () => {
         date: req.body.date,
         starthour: req.body.starthour,
         durationMinutes: req.body.durationMinutes,
-        qutoa: req.body.quota,
+        quota: req.body.quota,
       };
 
       await seminarsCollection.findOneAndUpdate(
@@ -630,7 +630,7 @@ module.exports = () => {
         verified: false,
       });
       await seminarsCollection.findOneAndUpdate(
-        { _id: req.params.idseminar },
+        { itemid: req.params.idseminar },
         { quota: req.body.quota - 1 }
       );
       const data = await newParticipants.save();
