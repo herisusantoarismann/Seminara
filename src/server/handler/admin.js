@@ -630,7 +630,7 @@ module.exports = () => {
         verified: false,
       });
       await seminarsCollection.findOneAndUpdate(
-        { itemid: req.params.idseminar },
+        { _id: req.params.idseminar },
         { quota: req.body.quota - 1 }
       );
       const data = await newParticipants.save();
