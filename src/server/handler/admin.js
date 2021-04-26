@@ -73,7 +73,7 @@ module.exports = () => {
           date: newSeminar.date,
           starthour: newSeminar.starthour,
           durationMinutes: newSeminar.durationMinutes,
-          quota: NewSeminar.quota,
+          quota: newSeminar.quota,
         },
       });
     },
