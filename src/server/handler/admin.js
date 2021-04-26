@@ -57,6 +57,7 @@ module.exports = () => {
         date: req.body.date,
         starthour: req.body.starthour,
         durationMinutes: req.body.durationMinutes,
+        quota: req.body.quota,
       });
 
       await newSeminar.save();
@@ -72,6 +73,7 @@ module.exports = () => {
           date: newSeminar.date,
           starthour: newSeminar.starthour,
           durationMinutes: newSeminar.durationMinutes,
+          qutoa: NewSeminar.quota,
         },
       });
     },
@@ -590,6 +592,7 @@ module.exports = () => {
         date: req.body.date,
         starthour: req.body.starthour,
         durationMinutes: req.body.durationMinutes,
+        qutoa: req.body.quota,
       };
 
       await seminarsCollection.findOneAndUpdate(
@@ -626,6 +629,10 @@ module.exports = () => {
         proof: req.body.nameProof + req.file.originalname,
         verified: false,
       });
+      await seminarsCollection.findOneAndUpdate(
+        { itemid: req.params.idseminar },
+        { quota: req.body.quota - 1 }
+      );
       const data = await newParticipants.save();
       res.json({
         status: "success",
