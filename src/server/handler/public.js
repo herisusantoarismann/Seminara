@@ -16,6 +16,10 @@ module.exports = () => {
         proof: req.body.nameProof + req.file.originalname,
         verified: false,
       });
+      await seminarsCollection.findOneAndUpdate(
+        { itemid: req.params.idseminar },
+        { quota: req.body.quota - 1 }
+      );
       const data = await newParticipants.save();
       res.json({
         status: "success",
