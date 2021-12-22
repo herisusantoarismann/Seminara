@@ -25,6 +25,7 @@ class Home extends Component {
       date: "",
       starthour: "",
       durationMinutes: "",
+      quota: "",
       activeItem: "Home",
     };
   }
@@ -64,58 +65,67 @@ class Home extends Component {
   // function to handle submit
   handleSubmit = (e) => {
     e.preventDefault();
-    const cookies = new Cookies();
-    Swal.fire({
-      title: "Adding Seminar",
-      text: "Are you sure?",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Add",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        fetch(process.env.REACT_APP_SERVER + "seminars", {
-          method: "POST",
-          body: JSON.stringify({
-            title: this.state.title,
-            partner: this.state.partner,
-            speaker: this.state.speaker,
-            moderator: this.state.moderator,
-            date: this.state.date,
-            starthour: this.state.starthour,
-            durationMinutes: this.state.durationMinutes,
-          }),
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: cookies.get("jwt"),
-          },
-        })
-          .then((res) => res.json())
-          .then((res) => {
-            if (res.status === "Success") {
-              Swal.fire({
-                title: "Good Joob!",
-                text: "Seminar Saved Successfully",
-                type: "success",
-                icon: "success",
-                showConfirmButton: false,
-                timer: 3000,
-              });
-              setTimeout(() => {
-                this.props.history.push("/app/dashboard");
-              }, 3000);
-            }
+    if (this.state.quota > 1000) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Quota exceeded!",
+      });
+    } else {
+      const cookies = new Cookies();
+      Swal.fire({
+        title: "Adding Seminar",
+        text: "Are you sure?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Add",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          fetch(process.env.REACT_APP_SERVER + "seminars", {
+            method: "POST",
+            body: JSON.stringify({
+              title: this.state.title,
+              partner: this.state.partner,
+              speaker: this.state.speaker,
+              moderator: this.state.moderator,
+              date: this.state.date,
+              starthour: this.state.starthour,
+              durationMinutes: this.state.durationMinutes,
+              quota: this.state.quota,
+            }),
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: cookies.get("jwt"),
+            },
           })
-          .catch((err) => {
-            Swal.fire({
-              icon: "error",
-              title: "Something went wrong!",
-              text: err,
+            .then((res) => res.json())
+            .then((res) => {
+              if (res.status === "Success") {
+                Swal.fire({
+                  title: "Good Joob!",
+                  text: "Seminar Saved Successfully",
+                  type: "success",
+                  icon: "success",
+                  showConfirmButton: false,
+                  timer: 3000,
+                });
+                setTimeout(() => {
+                  this.props.history.push("/app/dashboard");
+                }, 3000);
+              }
+            })
+            .catch((err) => {
+              Swal.fire({
+                icon: "error",
+                title: "Something went wrong!",
+                text: err,
+              });
             });
-          });
-      }
-    });
+        }
+      });
+    }
   };
 
   render() {
@@ -129,6 +139,7 @@ class Home extends Component {
       date,
       starthour,
       durationMinutes,
+      quota,
     } = this.state;
     return (
       <Fragment>
@@ -275,6 +286,20 @@ class Home extends Component {
                           placeholder="Duration"
                           name="durationMinutes"
                           value={durationMinutes}
+                          onChange={this.handleChange}
+                          required
+                        />
+                      </div>
+                    </Form.Field>
+                    <Form.Field inline>
+                      <div className="add-input-title">
+                        <label>Quota (maks 1000)</label>
+                      </div>
+                      <div className="add-input-place">
+                        <Form.Input
+                          placeholder="Quota"
+                          name="quota"
+                          value={quota}
                           onChange={this.handleChange}
                           required
                         />

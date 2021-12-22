@@ -151,7 +151,14 @@ export default class Login extends Component {
                     <h4>Password</h4>
                   </label>
                   <div className="login-forgot">
-                    <a href="/login">Forgot password?</a>
+                    <a
+                      href="#"
+                      onClick={() =>
+                        alert("Features will be available in the next update")
+                      }
+                    >
+                      Forgot password?
+                    </a>
                   </div>
                 </Form.Group>
                 <input
@@ -182,7 +189,14 @@ export default class Login extends Component {
           <div className="login-create">
             <p>
               Don't have an account?{" "}
-              <a href="/login">Create an account here.</a>
+              <a
+                href="#"
+                onClick={() =>
+                  alert("Features will be available in the next update")
+                }
+              >
+                Create an account here.
+              </a>
             </p>
           </div>
         </Card>

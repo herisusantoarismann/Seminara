@@ -14,7 +14,14 @@ module.exports = () => {
         phone: req.body.phone,
         option: req.body.option,
         proof: req.body.nameProof + req.file.originalname,
+        verified: false,
       });
+      if (req.body.option === "Pay") {
+        await seminarsCollection.findOneAndUpdate(
+          { itemid: req.params.idseminar },
+          { quota: req.body.quota - 1 }
+        );
+      }
       const data = await newParticipants.save();
       res.json({
         status: "success",

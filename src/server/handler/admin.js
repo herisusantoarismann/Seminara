@@ -57,6 +57,7 @@ module.exports = () => {
         date: req.body.date,
         starthour: req.body.starthour,
         durationMinutes: req.body.durationMinutes,
+        quota: req.body.quota,
       });
 
       await newSeminar.save();
@@ -72,6 +73,7 @@ module.exports = () => {
           date: newSeminar.date,
           starthour: newSeminar.starthour,
           durationMinutes: newSeminar.durationMinutes,
+          quota: newSeminar.quota,
         },
       });
     },
@@ -590,6 +592,7 @@ module.exports = () => {
         date: req.body.date,
         starthour: req.body.starthour,
         durationMinutes: req.body.durationMinutes,
+        quota: req.body.quota,
       };
 
       await seminarsCollection.findOneAndUpdate(
@@ -622,8 +625,16 @@ module.exports = () => {
         email: req.body.email,
         agency: req.body.agency,
         phone: req.body.phone,
+        option: req.body.option,
         proof: req.body.nameProof + req.file.originalname,
+        verified: false,
       });
+      if (req.body.option === "Pay") {
+        await seminarsCollection.findOneAndUpdate(
+          { itemid: req.params.idseminar },
+          { quota: req.body.quota - 1 }
+        );
+      }
       const data = await newParticipants.save();
       res.json({
         status: "success",
@@ -681,6 +692,20 @@ module.exports = () => {
       });
     },
 
+    ShowAllParticipantsV2: async (req, res) => {
+      const result = await participantsCollection.find({
+        seminaritemid: req.params.idseminar,
+      });
+
+      res.json({
+        status: "success",
+        message: "Semua partisipan berhasil ditampilkan",
+        data: {
+          result: result,
+        },
+      });
+    },
+
     CountParticipantsV1: async (req, res) => {
       const result = await participantsCollection.countDocuments({});
 
@@ -701,6 +726,54 @@ module.exports = () => {
         status: "Success",
         message: "partisipan berhasil ditampilkan",
         data: result,
+      });
+    },
+
+    ShowParticipantFreeV1: async (req, res) => {
+      const result = await participantsCollection.find(
+        {
+          seminaritemid: req.params.idseminar,
+          option: "Free",
+        },
+        { email: 1 }
+      );
+
+      res.json({
+        status: "success",
+        message: "partisipan berhasil ditampilkan",
+        data: result,
+      });
+    },
+
+    ShowParticipantPayV1: async (req, res) => {
+      const result = await participantsCollection.find(
+        {
+          seminaritemid: req.params.idseminar,
+          option: "Pay",
+        },
+        { email: 1 }
+      );
+
+      res.json({
+        status: "success",
+        message: "partisipan berhasil ditampilkan",
+        data: result,
+      });
+    },
+
+    VerifiedParticipantV1: async (req, res) => {
+      const verified = {
+        verified: req.body.verified,
+      };
+      await participantsCollection.findOneAndUpdate(
+        {
+          seminaritemid: req.params.idseminar,
+          itemid: req.params.id,
+        },
+        verified
+      );
+      res.json({
+        status: "success",
       });
     },
 
@@ -732,6 +805,77 @@ module.exports = () => {
       res.json({
         status: "success",
         message: "partisipan berhasil dihapus",
+      });
+    },
+
+    FilterParticipantsV1: async (req, res) => {
+      const paginateOption = {
+        page: req.params.page,
+        limit: 5,
+      };
+      const AscNameOption = {
+        page: req.params.page,
+        limit: 5,
+        sort: { name: "ascending" },
+      };
+      const DescNameOption = {
+        page: req.params.page,
+        limit: 5,
+        sort: { name: "descending" },
+      };
+      const keyword = req.body.keyword;
+      if (keyword) {
+        var data = await participantsCollection.paginate(
+          {
+            seminaritemid: req.params.idseminar,
+            name: { $regex: keyword, $options: "$i" },
+          },
+          paginateOption
+        );
+        var AscNameData = await participantsCollection.paginate(
+          {
+            seminaritemid: req.params.idseminar,
+            name: { $regex: keyword, $options: "$i" },
+          },
+          AscNameOption
+        );
+        var DescNameData = await participantsCollection.paginate(
+          {
+            seminaritemid: req.params.idseminar,
+            name: { $regex: keyword, $options: "$i" },
+          },
+          DescNameOption
+        );
+      } else {
+        var data = await participantsCollection.paginate(
+          { seminaritemid: req.params.idseminar },
+          paginateOption
+        );
+        var AscNameData = await participantsCollection.paginate(
+          { seminaritemid: req.params.idseminar },
+          AscNameOption
+        );
+        var DescNameData = await participantsCollection.paginate(
+          { seminaritemid: req.params.idseminar },
+          DescNameOption
+        );
+      }
+
+      res.json({
+        status: "Success",
+        message: `Berhasil Menampilkan Participants dengan keyword : ${req.params.keyword}`,
+        data: {
+          result: data,
+        },
+
+        AscNameData: {
+          result: AscNameData,
+        },
+
+        DescNameData: {
+          result: DescNameData,
+        },
+        param: req.params.idseminar,
       });
     },
   };

@@ -101,6 +101,14 @@ const main = () => {
     "/public/seminars/:idseminar/participants/:id",
     wrap(hpublic.ShowParticipantV1)
   );
+  router.get(
+    "/seminars/:idseminar/free/participants",
+    wrap(hadmin.ShowParticipantFreeV1)
+  );
+  router.get(
+    "/seminars/:idseminar/pay/participants",
+    wrap(hadmin.ShowParticipantPayV1)
+  );
   router.post(
     "/seminar/:idseminar/participants",
     upload.single("proof"),
@@ -112,6 +120,16 @@ const main = () => {
     validateAuth,
     wrap(hadmin.ShowAllParticipantsV1)
   );
+  router.get(
+    "/seminar/:idseminar/all/participants",
+    validateAuth,
+    wrap(hadmin.ShowAllParticipantsV2)
+  );
+  router.post(
+    "/seminar/:idseminar/search/participants/:page",
+    validateAuth,
+    wrap(hadmin.FilterParticipantsV1)
+  );
   router.get("/seminar/count/participants", wrap(hadmin.CountParticipantsV1));
   router.get(
     "/seminar/:idseminar/participants/:id",
@@ -122,6 +140,11 @@ const main = () => {
     "/seminar/:idseminar/participants/:id",
     validateAuth,
     wrap(hadmin.UpdateParticipantV1)
+  );
+  router.put(
+    "/seminar/:idseminar/verified/participants/:id",
+    validateAuth,
+    wrap(hadmin.VerifiedParticipantV1)
   );
   router.delete(
     "/seminar/:idseminar/participants/:id",

@@ -23,6 +23,7 @@ const SeminarSchema = new Schema({
   date: Date,
   starthour: String,
   durationMinutes: Number,
+  quota: Number,
 });
 SeminarSchema.plugin(mongoosePaginate);
 
@@ -35,6 +36,7 @@ const ParticipantsSchema = new Schema({
   phone: String,
   option: String,
   proof: String,
+  verified: Boolean,
 });
 ParticipantsSchema.plugin(mongoosePaginate);
 
