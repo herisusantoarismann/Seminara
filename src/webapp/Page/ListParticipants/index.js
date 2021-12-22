@@ -693,9 +693,9 @@ export class ListParticipants extends Component {
                           <td>{durationMinutes}</td>
                         </tr>
                         <tr>
-                          <td>Duration (Minutes)</td>
+                          <td>Remaining Quota</td>
                           <td>:</td>
-                          <td>{quota}</td>
+                          <td>{quota - totalDocs}</td>
                         </tr>
                       </table>
                       <div className="seminar-detail btn">
