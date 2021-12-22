@@ -61,6 +61,7 @@ export class ListParticipants extends Component {
       agency: "",
       email: "",
       proof: "",
+      quota: "",
       option: "",
       verified: "",
       keyword: "",
@@ -216,6 +217,7 @@ export class ListParticipants extends Component {
           date: res.data.date,
           starthour: res.data.starthour,
           durationMinutes: res.data.durationMinutes,
+          quota: res.data.quota,
         });
       })
       .catch((err) => {
@@ -593,6 +595,7 @@ export class ListParticipants extends Component {
       agency,
       email,
       proof,
+      quota,
       option,
       verified,
       keyword,
@@ -688,6 +691,11 @@ export class ListParticipants extends Component {
                           <td>Duration (Minutes)</td>
                           <td>:</td>
                           <td>{durationMinutes}</td>
+                        </tr>
+                        <tr>
+                          <td>Duration (Minutes)</td>
+                          <td>:</td>
+                          <td>{quota}</td>
                         </tr>
                       </table>
                       <div className="seminar-detail btn">
