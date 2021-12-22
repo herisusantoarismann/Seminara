@@ -44,7 +44,7 @@ const main = () => {
   router.post("/admin/login", wrap(hadmin.AuthV1));
 
   // ADMIN FUNCTIONS
-  router.post("/admin/sendmassmail", validateAuth, wrap(hadmin.SendMassMailV1));
+  // router.post("/admin/sendmassmail", validateAuth, wrap(hadmin.SendMassMailV1));
 
   // CRUD DATA SEMINAR
   router.post("/seminars/", validateAuth, wrap(hadmin.RegisterSeminarV1));

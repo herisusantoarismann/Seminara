@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const massmailer = require("../../services/mass-mailer");
+// const massmailer = require("../../services/mass-mailer");
 const cfgenv = require("../../config/env");
 const participantsCollection = require("../models").collectionParticipants;
 const seminarsCollection = require("../models").collection;
@@ -33,19 +33,19 @@ module.exports = () => {
       });
     },
 
-    SendMassMailV1: async (req, res) => {
-      let params = {
-        subject: req.body.subject,
-        recipients: req.body.recipients,
-        type: req.body.type,
-        content: req.body.content,
-      };
+    // SendMassMailV1: async (req, res) => {
+    //   let params = {
+    //     subject: req.body.subject,
+    //     recipients: req.body.recipients,
+    //     type: req.body.type,
+    //     content: req.body.content,
+    //   };
 
-      await massmailer.sendMassMail(params);
-      res.json({
-        message: "Email Berhasil Dikirim",
-      });
-    },
+    //   await massmailer.sendMassMail(params);
+    //   res.json({
+    //     message: "Email Berhasil Dikirim",
+    //   });
+    // },
 
     RegisterSeminarV1: async (req, res) => {
       const newSeminar = new seminarsCollection({
@@ -667,7 +667,7 @@ module.exports = () => {
       );
 
       res.json({
-        status: "success",
+        status: "Success",
         message: "Semua partisipan berhasil ditampilkan",
         data: {
           result: result,
@@ -698,7 +698,7 @@ module.exports = () => {
       });
 
       res.json({
-        status: "success",
+        status: "Success",
         message: "partisipan berhasil ditampilkan",
         data: result,
       });

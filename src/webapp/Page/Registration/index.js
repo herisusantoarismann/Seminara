@@ -26,7 +26,14 @@ class Registration extends React.Component {
     this.fetchData();
   }
 
-  // function to get data from API
+  showErrorAlert = (err) => {
+    Swal.fire({
+      icon: "error",
+      title: "Something went wrong!",
+      text: err,
+    });
+  };
+
   fetchData = () => {
     fetch(
       process.env.REACT_APP_SERVER +
@@ -46,11 +53,7 @@ class Registration extends React.Component {
         });
       })
       .catch((err) => {
-        Swal.fire({
-          icon: "error",
-          title: "Something went wrong!",
-          text: err,
-        });
+        this.showErrorAlert(err);
       });
   };
 

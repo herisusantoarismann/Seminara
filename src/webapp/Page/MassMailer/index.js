@@ -33,9 +33,7 @@ class MassMailer extends Component {
   componentDidMount() {
     document.title = "Seminara | Mass Mailer";
     const cookies = new Cookies();
-    const authenticate = cookies.get("jwt");
-    // User authentication
-    if (authenticate) {
+    if (cookies.get("jwt")) {
       this.setState({
         authenticate: true,
       });
@@ -205,6 +203,9 @@ class MassMailer extends Component {
         <div className="content-seminar">
           <div className="content-title">
             <h2>Mass Mailer</h2>
+            <span style={{ color: "red" }}>
+              Mailgun is a free version, so you can't send emails freely
+            </span>
             {this.state.errorMessage && (
               <Message negative>
                 <Message.Header>{this.state.errorMessage}</Message.Header>

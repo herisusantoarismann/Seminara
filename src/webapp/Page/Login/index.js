@@ -95,6 +95,7 @@ export default class Login extends Component {
             title: "Something went wrong!",
             text: err,
           });
+          console.log(err);
         });
     }
   };
