@@ -361,16 +361,13 @@ export class ListParticipants extends Component {
     e.preventDefault();
     const cookies = new Cookies();
     const formData = new FormData();
-    const nameProof =
-      this.state.agency.replace(/\s/g, "") + this.state.name.replace(/\s/g, "");
     formData.append("name", this.state.name);
     formData.append("email", this.state.email);
     formData.append("agency", this.state.agency);
     formData.append("phone", this.state.phone);
     formData.append("option", this.state.option);
-    formData.append("nameProof", nameProof);
     Swal.fire({
-      title: "Updating Seminar",
+      title: "Updating Participant",
       text: "Are you sure?",
       icon: "warning",
       showCancelButton: true,
@@ -387,8 +384,15 @@ export class ListParticipants extends Component {
             id,
           {
             method: "PUT",
-            body: formData,
+            body: JSON.stringify({
+              name: this.state.name,
+              email: this.state.email,
+              agency: this.state.agency,
+              phone: this.state.phone,
+              option: this.state.option,
+            }),
             headers: {
+              "Content-type": "application/json",
               Authorization: cookies.get("jwt"),
             },
           }
@@ -781,6 +785,7 @@ export class ListParticipants extends Component {
                                     itemid: item.itemid,
                                     proof:
                                       process.env.REACT_APP_URL_ASSETS +
+                                      "/" +
                                       item.proof,
                                     openProof: true,
                                     option: item.option,
@@ -808,6 +813,7 @@ export class ListParticipants extends Component {
                                     email: item.email,
                                     agency: item.agency,
                                     option: item.option,
+                                    idParticipants: item.itemid,
                                     modalEdit: true,
                                   })
                                 }
