@@ -368,7 +368,6 @@ export class ListParticipants extends Component {
     formData.append("agency", this.state.agency);
     formData.append("phone", this.state.phone);
     formData.append("option", this.state.option);
-    formData.append("proof", this.state.proof);
     formData.append("nameProof", nameProof);
     Swal.fire({
       title: "Updating Seminar",
@@ -809,9 +808,6 @@ export class ListParticipants extends Component {
                                     email: item.email,
                                     agency: item.agency,
                                     option: item.option,
-                                    proof:
-                                      process.env.REACT_APP_URL_ASSETS +
-                                      item.proof,
                                     modalEdit: true,
                                   })
                                 }
