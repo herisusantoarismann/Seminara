@@ -1023,15 +1023,6 @@ export class ListParticipants extends Component {
                           onChange={this.handleRadio}
                         />
                       </Form.Field>
-                      <Form.Field>
-                        <label>Bukti</label>
-                        <Form.Input
-                          type="file"
-                          name="proof"
-                          onChange={this.handleImage}
-                          required
-                        />
-                      </Form.Field>
                       <Button type="submit" primary>
                         Submit
                       </Button>
